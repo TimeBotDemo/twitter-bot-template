@@ -25,8 +25,11 @@ const handleTweet = async () => {
         });
 
         const tweetClient = twitterClient.readWrite;
-        await tweetClient.v2.tweet(quote);
-        console.log('Tweet posted!');
+        const tweetResponse = await tweetClient.v2.tweet(quote);
+
+        // Log the response to check if there are any issues
+        console.log('Tweet posted successfully:', tweetResponse);
+
     } catch (error) {
         console.error('Error posting tweet:', error);
     }
