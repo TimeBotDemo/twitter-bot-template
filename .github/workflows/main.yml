@@ -1,7 +1,7 @@
 name: send-tweet
 
 on:
-  workflow_dispatch:  # This allows manual triggering through GitHub Actions UI
+  workflow_dispatch:  # Manual trigger from GitHub UI
 
 jobs:
   tweet:
@@ -17,6 +17,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm cache clean --force  # Clean npm cache to avoid corrupted packages
-      - run: npm install --no-audit  # Install dependencies without audit to avoid errors
+      - run: rm -rf node_modules package-lock.json  # Remove old dependencies
+      - run: npm install --no-audit  # Install dependencies
       - run: echo "${{ secrets.ENV_FILE }}" > .env  # Inject environment variables from secrets
       - run: node index.js  # Run the bot script to post the tweet
