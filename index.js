@@ -1,16 +1,21 @@
+import https from 'https';
+import fetch from 'node-fetch';
 import { TwitterApi } from 'twitter-api-v2';
 import dotenv from 'dotenv';
-import fetch from 'node-fetch';
 
 dotenv.config();
 
+const fetchQuote = async () => {
+    const agent = new https.Agent({ rejectUnauthorized: false });
+    const response = await fetch('https://api.quotable.io/random', { agent });
+    const data = await response.json();
+    return data.content;
+};
+
 const handleTweet = async () => {
     try {
-        const response = await fetch('https://api.quotable.io/random');  // Change the API endpoint
-        const data = await response.json();
-        const quote = data.content;
-
-        console.log('Fetched quote:', quote);  // Log the fetched quote
+        const quote = await fetchQuote();
+        console.log('Fetched quote:', quote);
 
         const twitterClient = new TwitterApi({
             appKey: process.env.CONSUMER_KEY ?? '',
@@ -20,10 +25,10 @@ const handleTweet = async () => {
         });
 
         const tweetClient = twitterClient.readWrite;
-        const tweetResponse = await tweetClient.v2.tweet(quote);
-        console.log('Tweet response:', tweetResponse);  // Log the response from Twitter API
+        await tweetClient.v2.tweet(quote);
+        console.log('Tweet posted!');
     } catch (error) {
-        console.error('Error posting tweet:', error);  // Log any errors during the process
+        console.error('Error posting tweet:', error);
     }
 };
 
