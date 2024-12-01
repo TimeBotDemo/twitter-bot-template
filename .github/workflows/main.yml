@@ -2,7 +2,7 @@ name: send-tweet
 
 on:
   schedule:
-    - cron: "* * * * *"
+    - cron: "0 */2 * * *" # Every 2 hours
 
 jobs:
   tweet:
@@ -17,6 +17,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci
+      - run: npm install # Installs dependencies, including node-fetch
       - run: echo "${{ secrets.ENV_FILE }}" > .env
       - run: node index.js
