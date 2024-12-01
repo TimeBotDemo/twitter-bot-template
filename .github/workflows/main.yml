@@ -1,9 +1,6 @@
+
 name: send-tweet
-
-on:
-  schedule:
-    - cron: "* * * * *" # Every 2 hours
-
+on: workflow_dispatch
 jobs:
   tweet:
     runs-on: ubuntu-latest
