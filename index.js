@@ -6,7 +6,7 @@ dotenv.config();
 
 const handleTweet = async () => {
     try {
-        const response = await fetch('https://api.quotable.io/quotes/random');
+        const response = await fetch('https://api.quotable.io/random');  // Change the API endpoint
         const data = await response.json();
         const quote = data.content;
 
