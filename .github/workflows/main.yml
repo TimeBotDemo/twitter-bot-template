@@ -2,7 +2,7 @@ name: send-tweet
 
 on:
   schedule:
-    - cron: "0 */2 * * *"
+    - cron: "* * * * *"
 
 jobs:
   tweet:
