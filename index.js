@@ -15,20 +15,15 @@ const fetchQuote = async () => {
 const handleTweet = async () => {
     try {
         const quote = await fetchQuote();
-        console.log('Fetched quote:', quote);
-
         const twitterClient = new TwitterApi({
             appKey: process.env.CONSUMER_KEY ?? '',
             appSecret: process.env.CONSUMER_SECRET ?? '',
             accessToken: process.env.ACCESS_TOKEN ?? '',
             accessSecret: process.env.ACCESS_TOKEN_SECRET ?? '',
         });
-
         const tweetClient = twitterClient.readWrite;
         const tweetResponse = await tweetClient.v2.tweet(quote);
-
         console.log('Tweet posted successfully:', tweetResponse);
-
     } catch (error) {
         console.error('Error posting tweet:', error);
     }
