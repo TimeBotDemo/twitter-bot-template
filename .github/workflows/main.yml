@@ -17,6 +17,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - uses: gautamkrishnar/keepalive-workflow@master # using the workflow with default settings
       - run: npm cache clean --force
       - run: rm -rf node_modules package-lock.json
       - run: npm install --no-audit
